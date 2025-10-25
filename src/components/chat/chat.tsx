@@ -118,7 +118,10 @@ export function Chat() {
     form.reset();
 
     try {
-      const history = newMessages.map(({ id, rating, ...rest }) => rest);
+      const history = newMessages
+        .filter((m) => m.id !== 'starter')
+        .map(({ id, rating, ...rest }) => rest);
+        
       const result = await getAiResponse({
         history,
         message: values.message,

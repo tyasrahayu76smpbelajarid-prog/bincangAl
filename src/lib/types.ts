@@ -11,9 +11,11 @@ const MessageSchema = z.object({
   role: z.enum(['user', 'assistant', 'system']),
   content: z.string(),
 });
+type NoIdMessage = Omit<Message, 'id' | 'rating'>;
+
 
 export const GenerateChatResponseInputSchema = z.object({
-  history: z.array(MessageSchema).describe('The chat history so far.'),
+  history: z.array(MessageSchema.omit({ id: true, rating: true })).describe('The chat history so far.'),
   message: z.string().describe('The latest user message.'),
 });
 export type GenerateChatResponseInput = z.infer<
